@@ -1,0 +1,34 @@
+{{- $Imagename := .Values.imageName }}
+{{- $Portid := .Values.port }}
+{{- $Replicas := .Values.replicaCount }}
+{{- $Envname := .Values.envname }}
+{{- range .Values.deploymentName }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{- .appname | indent 1 }}- {{- $.Chart.Name }}- {{- $Envname }}
+  labels:
+    app: nginx
+spec:
+#{{- if eq $Envname "prod" }}
+#  replicas: 2
+#{{- else }}
+#  replicas: 1
+#{{- end }}
+  replicas: {{ $Replicas | int64 }}
+  selector:
+    matchLabels:
+      app: nginx
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+      - name: nginx
+        image: {{- $Imagename | indent 1}}
+        ports:
+        - containerPort: {{ $Portid | int64 }}
+---
+{{ end }}
+

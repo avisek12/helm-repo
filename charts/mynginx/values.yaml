@@ -1,0 +1,10 @@
+replicaCount: 3
+deploymentName:
+       - appname: "my-nginx"
+       - appname: "my-redis"
+imageName: "nginx"
+port: "80"
+envname: "prod"
+#Service part variable
+NodePort: null
+servicename: "my-nginx-service"
